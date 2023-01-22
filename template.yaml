@@ -1,0 +1,46 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: >
+  demo-app-sam
+
+  Sample SAM Template for demo-app-sam
+
+Globals:
+  Function:
+    Timeout: 3
+    MemorySize: 128
+    Tracing: Active
+  Api:
+    TracingEnabled: true
+
+Resources:
+  DemoFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: demo/
+      Handler: app.handler
+      Runtime: python3.8
+      Policies:
+      - DynamoDBCrudPolicy:
+          TableName: demo-table
+      Architectures:
+      - x86_64
+      Events:
+        DemoApi:
+          Type: Api
+          Properties:
+            Path: /
+            Method: get
+  DemoTable:
+    Type: AWS::DynamoDB::Table
+    Properties:
+      TableName: demo-table
+      AttributeDefinitions:
+        - AttributeName: id
+          AttributeType: S
+      KeySchema:
+        - AttributeName: id
+          KeyType: HASH
+      ProvisionedThroughput:
+        ReadCapacityUnits: 1
+        WriteCapacityUnits: 1

@@ -1,0 +1,11 @@
+version = 0.1
+[default]
+[default.deploy]
+[default.deploy.parameters]
+stack_name = "demo-app-sam"
+s3_bucket = "aws-sam-cli-managed-default-samclisourcebucket-14ika98ktbg26"
+s3_prefix = "demo-app-sam"
+region = "eu-west-2"
+confirm_changeset = true
+capabilities = "CAPABILITY_IAM"
+image_repositories = []
